@@ -1,10 +1,13 @@
 var React                 = require('react');
 var CourseActionCreator   = require('../../actions/CourseActionCreator');
-var CourseStore          = require('../../stores/CourseStore');
+var CourseStore           = require('../../stores/CourseStore');
 
 var Modal                 = require('react-bootstrap').Modal;
 var ModalTrigger          = require('react-bootstrap').ModalTrigger;
 var Button                = require('react-bootstrap').Button;
+var Input                 = require('react-bootstrap').Input;
+var Col                   = require('react-bootstrap').Col;
+var Row                   = require('react-bootstrap').Row;
 var OverlayMixin          = require('react-bootstrap').OverlayMixin;
 
 var CourseEdit = React.createClass({
@@ -49,11 +52,13 @@ var CourseEdit = React.createClass({
       lecture = {
         id: null,
         department: null,
+        course_name: null,
         course_number: null,
         section: null,
         term: null,
         year: null,
-        description: null
+        description: null,
+        instructor_id: null
       }
     }
     return { course: course };
@@ -70,20 +75,12 @@ var CourseEdit = React.createClass({
     });
   },
 
-	handleEditRosterClick: function() {
-		this.setState({isEditingRoster: true});
-	},
-
-	handleSaveInformationClick: function() {
-		this.setState({isEditingInfo: false});
-	},
-
-	handleSaveRosterClick: function() {
-		this.setState({isEditingRoster: false});
-	},
-
   handleUploadCsvClick: function() {
     this.setState({isUploadingCsv: !this.state.isUploadingCsv});
+  },
+
+  handleSaveInformation: function() {
+
   },
 
   /*============================== @RENDERING ==============================*/
@@ -104,52 +101,54 @@ var CourseEdit = React.createClass({
     return (
       <Modal title='Course Edit' onRequestHide={this.handleToggle}>
         <div className='modal-body'>
-          {this.renderRosterEditButton()} <br/><br/>
           <form>
-                 Department <input type="text" name="course__deparment" value={course.department}/> <br/>
-                 Number <input type="text" name="course__number" value={course.course_number}/>
-                 Section <input type="text" name="course__section" value={course.section}/> <br/>
-                 Term <input type="text" name="course__term" value={course.term}/>
-                 Year <input type="text" name="course__year" value={course.year}/> <br/>
-                 Description <br/> <textarea type="text" name="course__description" value={course.description}/> <br/>
+            <Row>
+              <Col md={6}>
+                <Input type='text' label='Department' name="course__department" value={course.department} />
+              </Col>
+              <Col md={3}>
+                <Input type='text' label='Number' name="course__number" value={course.course_number} />
+              </Col>
+              <Col md={3}>
+                <Input type='text' label='Section' name="course__section" value={course.section} />
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <Input type='text' label='Course Name' name="course__name" value={course.course_name} />
+              </Col>
+              <Col md={3}>
+                <Input type='text' label='Term' name="course__term" value={course.term} />
+              </Col>
+              <Col md={3}>
+                <Input type='text' label='Year' name="course__year" value={course.year} />
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <Input type='text' label='Instructor' name="course__instructor" value={course.instructor_id} />
+              </Col>
+            </Row>
+            <Input type='textarea' label='Description' name="course__description" value={course.description} />
           </form>
+          {this.renderUploadCsvButton()} <br/>
         </div>
         <div className='modal-footer'>
-          <Button bsStyle='primary'>Save changes</Button>
+          <Button bsStyle='primary' onClick={this.handleSaveInformation}>Save changes</Button>
           <Button onClick={this.handleToggle}>Close</Button>
         </div>
       </Modal>
     );
   },
 
-  renderInfoEditButton: function(){
-    if (this.state.isEditingInfo){
-      return <button onClick={this.handleSaveInformationClick}> Save Information </button>;
-    } else {
-      return <button onClick={this.handleEditInformationClick}> Edit Information </button>;
-    }
-  },
-
-  renderRosterEditButton: function() {
-    if (this.state.isEditingRoster){
-      return 	<div>
-                {this.renderUploadCsvButton()} <br/>
-                <button> Paste Email </button> <br/>
-                <button onClick={this.handleSaveRosterClick}> Save Roster </button>
-              </div>;
-    } else {
-      return <button onClick={this.handleEditRosterClick}> Edit Roster </button>;
-    }
-  },
-
   renderUploadCsvButton: function() {
     if (this.state.isUploadingCsv){
       return <span>
-                <input type='file'/>
-                <button onClick={this.handleUploadCsvClick}> Upload </button>
+                <Input type='file' label='File'/>
+                <Button onClick={this.handleUploadCsvClick}> Upload </Button>
              </span>;
     } else {
-      return <button onClick={this.handleUploadCsvClick}> Upload CSV File </button>;
+      return <Button onClick={this.handleUploadCsvClick}> Upload Roster by CSV File </Button>;
     }
   }
 });
