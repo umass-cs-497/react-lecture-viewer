@@ -30,6 +30,16 @@ var CourseActionCreator = {
     //   course_id: course_id,
     //   course: course
     // });
+  },
+
+  saveCourse: function(course_id, course) {
+    var course = API.saveCourse(course_id, course);
+    log('SAVE_COURSE', 'course', course);
+    Dispatcher.dispatch({
+      actionType: ActionConstants.SAVE_COURSE,
+      course_id: course_id,
+      course: course
+    });
   }
 }
 

@@ -79,8 +79,15 @@ var CourseEdit = React.createClass({
     this.setState({isUploadingCsv: !this.state.isUploadingCsv});
   },
 
-  handleSaveInformation: function() {
+  handleChange: function(attribute, event) {
+    event.preventDefault();
+    var course = this.state.course;
+    course[attribute] = event.target.value;
+    this.setState({course: course});
+  },
 
+  handleSaveInformation: function() {
+    CourseActionCreator.saveCourse(this.props.course_id, this.state.course);
   },
 
   /*============================== @RENDERING ==============================*/
@@ -104,32 +111,32 @@ var CourseEdit = React.createClass({
           <form>
             <Row>
               <Col md={6}>
-                <Input type='text' label='Department' name="course__department" value={course.department} />
+                <Input type='text' label='Department' name="course__department" value={course.department} onChange={this.handleChange.bind(this, 'department')}/>
               </Col>
               <Col md={3}>
-                <Input type='text' label='Number' name="course__number" value={course.course_number} />
+                <Input type='text' label='Number' name="course__number" value={course.course_number} onChange={this.handleChange.bind(this, 'course_number')} />
               </Col>
               <Col md={3}>
-                <Input type='text' label='Section' name="course__section" value={course.section} />
+                <Input type='text' label='Section' name="course__section" value={course.section} onChange={this.handleChange.bind(this, 'section')} />
               </Col>
             </Row>
             <Row>
               <Col md={6}>
-                <Input type='text' label='Course Name' name="course__name" value={course.course_name} />
+                <Input type='text' label='Course Name' name="course__name" value={course.course_name} onChange={this.handleChange.bind(this, 'course_name')} />
               </Col>
               <Col md={3}>
-                <Input type='text' label='Term' name="course__term" value={course.term} />
+                <Input type='text' label='Term' name="course__term" value={course.term} onChange={this.handleChange.bind(this, 'term')} />
               </Col>
               <Col md={3}>
-                <Input type='text' label='Year' name="course__year" value={course.year} />
+                <Input type='text' label='Year' name="course__year" value={course.year} onChange={this.handleChange.bind(this, 'year')} />
               </Col>
             </Row>
             <Row>
               <Col md={6}>
-                <Input type='text' label='Instructor' name="course__instructor" value={course.instructor_id} />
+                <Input type='text' label='Instructor' name="course__instructor" value={course.instructor_id} onChange={this.handleChange.bind(this, 'instructor_id')} />
               </Col>
             </Row>
-            <Input type='textarea' label='Description' name="course__description" value={course.description} />
+            <Input type='textarea' label='Description' name="course__description" value={course.description} onChange={this.handleChange.bind(this, 'description')} />
           </form>
           {this.renderUploadCsvButton()} <br/>
         </div>

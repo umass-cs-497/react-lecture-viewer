@@ -51,11 +51,14 @@ CourseStore.dispatcher = Dispatcher.register(function(payload) {
       addCourse(payload.course);
       break;
     case ActionConstants.REQUEST_COURSE:
-      console.log(payload);
       updateCourse(payload.course_id, payload.course);
       break;
     case ActionConstants.REQUEST_COURSES:
       updateCourses(payload.courses);
+      break;
+    case ActionConstants.SAVE_COURSE:
+      console.log(payload);
+      updateCourse(payload.course_id, payload.course);
       break;
     defaut:
       break;

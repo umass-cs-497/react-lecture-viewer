@@ -176,6 +176,13 @@ var API = {
     return course;
   },
 
+  saveCourse: function(course_id, course){
+    if(courses[course_id]) {
+      courses[course_id]=course;
+    }
+    return course;
+  },
+
   /*============================== @LECTURES ==============================*/
 
   getLectures: function(course_id) {
