@@ -20,6 +20,16 @@ var CourseActionCreator = {
       actionType: ActionConstants.REQUEST_COURSES,
       courses: courses
     });
+  },
+
+  requestCourse: function(course_id) {
+    var course = API.getCourse(course_id);
+    log('REQUEST_COURSE', 'course', course);
+    // Dispatcher.dispatch({
+    //   actionType: ActionConstants.REQUEST_COURSE,
+    //   course_id: course_id,
+    //   course: course
+    // });
   }
 }
 

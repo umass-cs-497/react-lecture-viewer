@@ -163,6 +163,13 @@ var API = {
     });
   },
 
+  getCourse: function(course_id) {
+    if(courses[course_id]){
+      return courses[course_id];
+    }
+    return null;
+  },
+
   createCourse: function(tentativeCourse) {
     var course = generateCourse(tentativeCourse);
     courses[course.id] = course;
